@@ -278,8 +278,11 @@ namespace _SyncToBackend.Editor
                 {
                     data.networkIdentities.Add(networkIdentityData);
                 }
-
-                if (GetNetworkManager(prefab, out var networkManagerSetting))
+                if (GetNetworkRoomManager(prefab, out var networkRoomManagerSetting))
+                {
+                    data.networkRoomManagerSettings.Add(networkRoomManagerSetting);
+                }
+                else if (GetNetworkManager(prefab, out var networkManagerSetting))
                 {
                     data.networkManagerSettings.Add(networkManagerSetting);
                 }
@@ -314,6 +317,18 @@ namespace _SyncToBackend.Editor
             }
         }
 
+        private static bool GetNetworkRoomManager(GameObject gameObject, out NetworkRoomManagerSetting networkRoomManagerSetting)
+        {
+            networkRoomManagerSetting = new NetworkRoomManagerSetting();
+
+            if (gameObject.TryGetComponent(out NetworkRoomManager networkRoomManager))
+            {
+                networkRoomManagerSetting = SetNetworkRoomManagerSetting(networkRoomManager);
+                return true;
+            }
+
+            return false;
+        }
         private static bool GetNetworkManager(GameObject gameObject, out NetworkManagerSetting networkManagerSetting)
         {
             networkManagerSetting = new NetworkManagerSetting();
@@ -395,6 +410,10 @@ namespace _SyncToBackend.Editor
                             var networkAnimatorSetting = JsonUtility.FromJson<NetworkAnimatorSetting>(File.ReadAllText(networkAnimatorSettingPath));
                             comp.networkAnimatorSetting = networkAnimatorSetting;
                         }
+                    } else if (component is NetworkRoomPlayer networkRoomPlayerSetting)
+                    {
+                        comp.componentType = networkRoomPlayerSetting.GetType().ToString();
+                        comp.networkTransformReliableSetting = new NetworkTransformReliableSetting();
                     } else
                     {
                         comp.componentType = component.GetType().FullName;
@@ -437,6 +456,16 @@ namespace _SyncToBackend.Editor
             o.dynamicAdjustment = i.dynamicAdjustment;
             o.dynamicAdjustmentTolerance = i.dynamicAdjustmentTolerance;
             o.deliveryTimeEmaDuration = i.deliveryTimeEmaDuration;
+            return o;
+        }
+
+        private static NetworkRoomManagerSetting SetNetworkRoomManagerSetting(NetworkRoomManager i)
+        {
+            var o = new NetworkRoomManagerSetting();
+            o.showRoomGUI = i.showRoomGUI;
+            o.minPlayers = i.minPlayers;
+            o.roomPlayerPrefab = UnityEditor.AssetDatabase.GetAssetPath(i.roomPlayerPrefab);
+            o.networkManagerSetting = SetNetworkManagerSetting(i);
             return o;
         }
 

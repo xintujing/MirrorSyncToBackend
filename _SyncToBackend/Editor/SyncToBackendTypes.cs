@@ -114,7 +114,15 @@ namespace _SyncToBackend.Editor
         // Minimum number of players to auto-start the game
         public int minPlayers;
         // Prefab to use for the Room Player
-        public NetworkRoomPlayer roomPlayerPrefab;
+        public string roomPlayerPrefab;
+
+        public NetworkManagerSetting networkManagerSetting;
+    }
+
+    [Serializable]
+    public struct NetworkRoomPlayerSetting
+    {
+        
     }
 
     [Serializable]
@@ -239,6 +247,7 @@ namespace _SyncToBackend.Editor
         public List<MethodData> methods;
         public List<NetworkIdentityData> networkIdentities;
         public List<NetworkManagerSetting> networkManagerSettings;
+        public List<NetworkRoomManagerSetting> networkRoomManagerSettings;
         public List<KeyValue<string, string>> sceneIds;
         public List<SyncVarData> syncVars;
         public List<KeyValue<uint, string>> assets;
