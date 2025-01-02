@@ -1,0 +1,19 @@
+{
+    "name": "SyncToBackend.Editor",
+    "rootNamespace": "",
+    "references": [
+    "GUID:30817c1a0e6d646d99c048fc403f5979",
+    "GUID:926bfb6e3e974448aa13a9273246aaeb",
+    "GUID:72872094b21c16e48b631b2224833d49"],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
