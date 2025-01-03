@@ -115,6 +115,10 @@ namespace _SyncToBackend.Editor
         public int minPlayers;
         // Prefab to use for the Room Player
         public string roomPlayerPrefab;
+        // The scene to use for the room. This is similar to the offlineScene of the NetworkManager.
+        public string roomScene;
+        // The scene to use for the playing the game from the room. This is similar to the onlineScene of the NetworkManager.
+        public string gameplayScene;
 
         public NetworkManagerSetting networkManagerSetting;
     }
@@ -252,8 +256,6 @@ namespace _SyncToBackend.Editor
         public List<SyncVarData> syncVars;
         public List<KeyValue<uint, string>> assets;
     }
-    
-    
 
     [Serializable]
     public struct KeyValue<TKey,TValue>

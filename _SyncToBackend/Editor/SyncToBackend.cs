@@ -31,6 +31,7 @@ namespace _SyncToBackend.Editor
             data.assets = new List<KeyValue<uint, string>>();
             data.networkIdentities = new List<NetworkIdentityData>();
             data.networkManagerSettings = new List<NetworkManagerSetting>();
+            data.networkRoomManagerSettings = new List<NetworkRoomManagerSetting>();
         }
 
         public static void Awake(MonoBehaviour mb)
@@ -465,6 +466,8 @@ namespace _SyncToBackend.Editor
             o.showRoomGUI = i.showRoomGUI;
             o.minPlayers = i.minPlayers;
             o.roomPlayerPrefab = UnityEditor.AssetDatabase.GetAssetPath(i.roomPlayerPrefab);
+            o.roomScene = i.RoomScene;
+            o.gameplayScene = i.GameplayScene;
             o.networkManagerSetting = SetNetworkManagerSetting(i);
             return o;
         }
