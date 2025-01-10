@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 
@@ -46,11 +47,15 @@ namespace _SyncToBackend.Editor
                 networkAnimatorSetting.animator.layers.Add(networkAnimatorStateSetting);
             }
             
-            byte parameterCount = (byte)animator.parameters.Length;
+            var parameters = animator.parameters
+                .Where(par => !animator.IsParameterControlledByCurve(par.nameHash))
+                .ToArray();
+            
+            byte parameterCount = (byte)parameters.Length;
             networkAnimatorSetting.animator.parameters = new List<NetworkAnimatorParameterSetting>();
             for (int j = 0; j < parameterCount; j++)
             {
-                AnimatorControllerParameter par = animator.parameters[j];
+                AnimatorControllerParameter par = parameters[j];
                 var networkAnimatorParameterSetting = new NetworkAnimatorParameterSetting();
                 networkAnimatorParameterSetting.index = j;
                 if (par.type == UnityEngine.AnimatorControllerParameterType.Int)
